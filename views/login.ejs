@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  
+
+
+    <!-- <script type="text/JavaScript" href="E:\dairyweb\index.js"</script> -->
+    <script src="https://www.gstatic.com/firebasejs/3.6.1/firebase.js"></script>
+    <script type="text/JavaScript" href='E:\dairyweb\index.js'></script>
+
+
+    <title>login page</title>
+    <style>
+        .btn btn-primary {
+            height: 20px;
+        }
+
+        body {
+            background-color: azure;
+            align-content: center;
+            float: center;
+            text-align: center;
+
+            width: 100%;
+            background-image: url("https://img.icons8.com/officel/16/000000/hourglass.png")no-repeat;
+        }
+
+        .form {
+            background-color: cornsilk;
+            height: 270px;
+            width: 500px;
+            -webkit-border-radius: 12px;
+            border-radius: 12px;
+            -webkit-box-shadow: 0px 2px 14px #000;
+            box-shadow: 0px 2px 14px #000;
+            border-top: 1px solid #FFF;
+            border-bottom: 1px solid #FFF;
+            position: relative;
+            top: 20px;
+            padding-left: 15px;
+            padding-right: 15px;
+            padding-top: 15px;
+            display: inline-block;
+
+        }
+
+        small {
+            color: maroon;
+        }
+
+        .form2 {
+            display: inline-block;
+            position: relative;
+            top: 40px;
+
+
+        }
+
+        h1 {
+            font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
+            color: navy;
+            font-weight: bolder;
+            text-align: center;
+            position: relative;
+            padding-top: 10px;
+            color: aliceblue;
+            text-shadow: 1px 1px 2px black, 0 0 25px orangered, 0 0 5px darkblue;
+        }
+
+        h3 {
+            font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
+            color: #000;
+            font-weight: bold;
+            text-align: center;
+            position: relative;
+            padding-top: 10px;
+
+        }
+
+        .form-control {
+            position: relative;
+
+            -webkit-border-radius: 8px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <br>
+
+    <h1>WELCOME to Techlumin AV</h1>
+    <%if(data.show){%>
+    <h1><%=data.show%><h1>
+            <%}%>
+        
+    
+    
+    <form method="POST" action="/login">
+        <div class="form" >
+
+            <div>
+                <label>Username</label>
+                <input class="form-control" name="username" id="username" type="name">
+                <%if(data.view){%>
+            <small><%=data.msg1%></small>
+            <% }%>
+            </div>
+            <div>
+                <label>password</label>
+                <input class="form-control" name="password" id="password" type="password">
+                <%if(data.view){%>
+                <small><%=data.msg%></small>
+                <% }%>
+                <!-- An element to toggle between password visibility -->
+                <input type="checkbox" onclick="myFunction1()" style="align-content:left;">Show Password
+                <script>
+                    function myFunction1() {
+                        var x = document.getElementById("password");
+                        if (x.type === "password") {
+                            x.type = "text";
+                        } else {
+                            x.type = "password";
+                        }
+                    }
+                </script>
+            </div>
+            <br>
+            <div>
+                <button class="btn btn-primary" id="loginbtn">login</button>
+            </div>
+            </div>
+            <br>
+
+
+            </form>
+            <div class="form2">
+                <a href="/signup?">create account</a>
+
+
+            </div>
+              <div class="form2">
+                <a href="/forgotpassword">Forget password</a>
+            
+            </div>
+            <!-- Optional JavaScript -->
+            <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+                integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+                crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+                integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+                crossorigin="anonymous"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+                integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+                crossorigin="anonymous"></script>
+</body>
+
+</html>

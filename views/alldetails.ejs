@@ -1,0 +1,281 @@
+<!DOCTYPE html> 
+<html class="no-js">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="E:\dairyweb\css\alldairies.css">
+  
+    <title>MyDairies</title>
+    <style>
+      * {
+    outline:none;
+      border:none;
+      margin:0px;
+      padding:0px;
+      font-family:Courier, monospace;
+  }
+  body {
+      background:pink url(https://webgradients.com/public/webgradients_png/001%20Warm%20Flame.png) repeat;        
+  }
+  #paper {
+      color:#FFF;
+      font-size:20px;
+  }
+  #margin {
+      margin-left:12px;
+      margin-bottom:20px;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      -o-user-select: none;
+      user-select: none; 
+  }
+  .card-text1 {
+    
+    background-color:rgb(255, 240, 30);
+    color:#222;
+    font-family:Courier, monospace;
+    font-weight:normal;
+    font-size:24px;
+    resize:none;
+    line-height:40px;
+    padding-left:100px;
+    padding-right:100px;
+    padding-top:40px;
+    padding-bottom:34px;
+    background-image:url(https://static.tumblr.com/maopbtg/E9Bmgtoht/lines.png), url(https://static.tumblr.com/maopbtg/nBUmgtogx/paper.png);
+    background-repeat:repeat-y, repeat-x;
+    -webkit-border-radius:12px;
+    border-radius:12px;
+    -webkit-box-shadow: 0px 2px 14px #000;
+    box-shadow: 0px 2px 14px #000;
+    border-top:1px solid #FFF;
+    border-bottom:1px solid #FFF;
+}
+  
+ 
+  #title1 {
+    background-color:transparent;
+    border-bottom:3px solid #FFF;
+    color:#FFF;
+    font-size:20px;
+    font-family:Courier, monospace;
+    height:28px;
+    font-weight:bold;
+    width:220px;
+    position: center;
+}
+
+#title3 {
+    background-color:transparent;
+    /* border-bottom:3px solid #FFF; */
+    color:#FFF;
+    font-size:20px;
+    font-family:Courier;
+    height:14px;
+    font-weight:bold;
+    width:220px;
+    align-items: center;
+    padding-top: 80px;
+    font-stretch: expanded;    
+}
+#title4 {
+    background-color:transparent;
+    /* border-bottom:3px solid #FFF; */
+    color:#FFF;
+    font-size:20px;
+    font-family:"Lucida Console", Courier, monospace;
+    height:28px;
+    font-weight:bold;
+    color:navy;
+    width:220px;
+    /* position: center; */
+    align-items: center;
+    padding-bottom: 50px;
+    padding-top: 10px;
+    
+}
+  #button {
+      cursor:pointer;
+      margin-top:20px;
+      float: left;
+      height:40px;
+      padding-left:24px;
+      padding-right:24px;
+      font-family:Arial, Helvetica, sans-serif;
+      font-weight:bold;
+      font-size:20px;
+      color:#FFF;
+      text-shadow: 0px -1px 0px #000000;
+      -webkit-border-radius:8px;
+      border-radius:8px;
+      border-top:1px solid #FFF;
+      -webkit-box-shadow: 0px 2px 14px #000;
+      box-shadow: 0px 2px 14px #000;
+      background-color: #62add6;
+      
+      
+  }
+  #button:active {
+      zoom: 1;
+      filter: alpha(opacity=80);
+      opacity: 0.8;
+  }
+  #button:focus {
+      zoom: 1;
+      filter: alpha(opacity=80);
+      opacity: 0.8;
+  }
+  #wrapper {
+      width:700px;
+      height:auto;
+      margin-left:auto;
+      margin-right:auto;
+      margin-top:24px;
+      margin-bottom:100px;
+  }
+
+  #signout {
+    cursor:pointer;
+    margin-top:20px;
+    float:right;
+    height:40px;
+    padding-left:24px;
+    padding-right:24px;
+    font-family:Arial, Helvetica, sans-serif;
+    font-weight:bold;
+    font-size:20px;
+    color:#FFF;
+    text-shadow: 0px -1px 0px #000000;
+    -webkit-border-radius:8px;
+    border-radius:8px;
+    border-top:1px solid #FFF;
+    -webkit-box-shadow: 0px 2px 14px #000;
+    box-shadow: 0px 2px 14px #000;
+    background-color: red;
+    
+}
+
+#getall {
+    cursor:pointer;
+    margin-top:20px;
+    float:right;
+    height:40px;
+    padding-left:24px;
+    padding-right:24px;
+    font-family:Arial, Helvetica, sans-serif;
+    font-weight:bold;
+    font-size:20px;
+    color:#FFF;
+    text-shadow: 0px -1px 0px #000000;
+    -webkit-border-radius:8px;
+    border-radius:8px;
+    border-top:1px solid #FFF;
+    -webkit-box-shadow: 0px 2px 14px #000;
+    box-shadow: 0px 2px 14px #000;
+    background-color:yellow;
+    
+}
+.card{
+  position:sticky;
+  top:50px;
+  padding-top: 25px;
+  border-radius: 15px;
+  border-top: #62add6;
+}
+.card-title{
+  font-weight: bold;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-style: oblique;
+}
+
+    </style>
+  </head>
+  <body>
+    <div id="wrapper">
+         <form action="/logout" method="GET">
+             <button id="signout" name="signout" onclick="logout()">signout</button>
+            </form>
+
+            <form action="/getall" method="GET">
+              <button id="getall" name="getall" >GetAll</button>
+             </form>
+
+             <form id="paper"  action="/getone" method="POST" >
+              <div id="margin"> 
+               Date:   <input id="title1" type="date" name="date">
+              </div>
+             <input id="button" type="submit" value="search" >
+             </form>
+
+             <br>
+             <br>
+             <br>
+             <% if(data.viewone){%>
+              <div class="card mb-3" style="width: 540px;">
+                <div class="row no-gutters">
+                <div class="col-md-4">
+                <%if(data.results.img){%>
+                  <img class="card-img-" width="100%" height="250" src="<%=data.result.img%>" alt="Card image">
+                  <%}%>
+                  <%if(!data.results.img){%>
+                <img class="card-img-" width="100%" height="250" src="https://image.freepik.com/free-vector/life-is-journey-enjoy-ride_68166-194.jpg" alt="Card image">
+                <%}%>
+              </div>
+                  <div class="col-md-8">
+                    <div class="card-body">
+                      <h4 class="card-title" ><%=data.results.title%></h4>
+                      <p class="card-text"> <%=data.results.date%></p>
+                      <p class="card-text1" class="card-text" ><%=data.results.main%></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+             <% }%> 
+
+             <% if(data.view){%>
+             
+             <%for(var i=0;i!=data.result.length;i++){%>
+           
+            <div class="card mb-3" style="width: 540px;">
+             <div class="row no-gutters">
+             <div class="col-md-4">
+             <%if(data.result[i].img){%>
+               <img class="card-img-" width="100%" height="250" src="<%=data.result[i].img%>" alt="Card image">
+               <%}%>
+               <%if(!data.result[i].img){%>
+             <img class="card-img-" width="100%" height="250" src="https://image.freepik.com/free-vector/life-is-journey-enjoy-ride_68166-194.jpg" alt="Card image">
+             <%}%>
+           </div>
+               <div class="col-md-8">
+                 <div class="card-body">
+                   <h4 class="card-title" ><%=data.result[i].title%></h4>
+                   <p class="card-text"> <%=data.result[i].date%></p>
+                   <p class="card-text1" class="card-text" ><%=data.result[i].main%></p>
+                 </div>
+               </div>
+             </div>
+           </div>
+         <% }%>
+         <% }%>
+
+    </div>
+       
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+$('#title').focus();
+$('#text').autosize();
+});
+    </script>
+  </body>
+</html>
