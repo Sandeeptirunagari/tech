@@ -3,13 +3,13 @@ var bodyParser = require('body-parser')
 var passport = require('passport')
 var nodemailer = require('nodemailer');
 const request = require('request');
-var LocalStrategy = require('passport-local').Strategy;
- var ejs = require('ejs');                                         
+const passportLocalStrategy = require("passport-local").Strategy;
+ var ejs = require('ejs');    
+ var bcrypt=require( 'bcrypt')
+                                     
 var User = require('./models/user');
-var Details = require('./models/detailsSchema');
 var randomstring=require("randomstring");
-var crypto = require('crypto');
-const port = process.env.PORT||5000;
+const port = process.env.PORT||3000;
 var transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -37,9 +37,38 @@ app.use(require('express-session')({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(new LocalStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+passport.use(
+    new passportLocalStrategy((username, password, done) => {
+      User.findUser(username, (err, docs) => {
+        if (err) {
+          throw err;
+        } else if (docs) {
+          User.comparePassword(password, docs.password, (err, isMatch) => {
+            if (isMatch) {
+              return done(null, docs);
+            } else {
+              return done(null, false, {
+                message: "Invalid Password",
+              });
+            }
+          });
+        } else {
+          return done(null, false, {
+            message: "User not found",
+          });
+        }
+      });
+    })
+  );
+  passport.serializeUser((user, done) => {
+    done(null, user.id); // check
+  });
+  passport.deserializeUser((id, done) => {
+    User.findUserById(id, (err, docs) => {
+      done(err, docs);
+    });
+  });
+
 app.get('/' ,(req,res)=>{
 res.render('login',{data:{view :false }})
 })
@@ -53,15 +82,18 @@ app.get('/login', isLoggedIn, function (req, res) {
 })
 //posting  details in register page 
 app.post("/signup", function (req, res) {
-    //user is a colllection 
-  Users = new User({ email: req.body.email, username: req.body.username,phonenumber:req.body.phonenumber,meteridnumber:req.body.meteridnumber,adhaarnumber:req.body.adhaarnumber });
-//checking whether the given details are exist or new one
-  User.register(Users, req.body.cpassword, function (err, user) {
+   
+  User.createUser({ email: req.body.email,
+     password: req.body.password,
+     username: req.body.username,
+     phonenumber:req.body.phonenumber,
+     meteridnumber:req.body.meteridnumber,
+     adhaarnumber:req.body.adhaarnumber }
+     ,function (err) {
       if (err) {
-          res.render('register', { data: { view: true, msg: "given details are already exist" } })//if error msg will print
+          res.render('register', { data: { view: true, msg: err } })//if error msg will print
       } else {
-       
-          res.render('login' ,{ data: { view: false   } });//if correct render to login page
+              res.render('login' ,{ data: { view: false   } });//if correct render to login page
           //sending email after successfully signedup
           const mailOptions = {
             from: 'techluminav@gmail.com', // sender address
@@ -160,23 +192,22 @@ app.get("/logout", function (req, res) {
 
 //forgot password
 app.get("/forgotpassword",function(req,res){
-    res.render('forgotPassword');
+    res.render('forgotPassword',{data:{view:false}});
 })
 app.post("/newPassword",function(req,res){
-    User.findOne({email:req.body.email},(err,user)=>{
+    User.findOne({adhaarnumber
+        :req.body.adhaarnumber
+    },(err,user)=>{
         if(err){
         console.log(err);
-        res.render('forgotPassword');
+        res.render('forgotPassword',{data:{view:true ,msg:err}});
 
         }
         else{
             if(user){
-            console.log(user);
+            
              var token=randomstring.generate();
-            // crypto.randomBytes(20, function(err, buf) {
-            //  token = buf.toString('hex');
-            // })
-            console.log(token)
+          
             user.resetPasswordToken = token;
             user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
                        user.save(function(err){
@@ -184,11 +215,11 @@ app.post("/newPassword",function(req,res){
                                console.log(err)
                            }
                        });
-                       console.log(user);
+                      
              //sending email after successfully signedup
           const mailOptions = {
             from: 'techluminav@gmail.com', // sender address
-            to: req.body.email, // list of receivers
+            to: user.email, // list of receivers
             subject: 'Subject of your email', // Subject line
             text :'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
           'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
@@ -201,18 +232,16 @@ app.post("/newPassword",function(req,res){
             else
               console.log(info);
          });
-             res.render('forgotPassword', { data: { view: false } });
+             res.render('forgotPassword', { data: { view: true ,msg:"mail has been sent to "+user.email} });
             }
             else{
-                 console.log("user not found");
-                 res.render('forgotPassword');
+                 
+                 res.render('forgotPassword',{data:{view:true ,msg:"user not found"}});
             }
         }
     })
 })
-app.get('/reset/:token',(req,res)=>{
-    console.log(req.params.token)
-    
+app.get('/reset/:token',(req,res)=>{   
    User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
     if (!user) {
       
@@ -224,7 +253,6 @@ app.get('/reset/:token',(req,res)=>{
   });
 })
 app.post('/updatePassword/:token' ,(req,res)=>{
-    console.log(req.params.token)
   User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
       console.log(user);
         if (!user) {
@@ -234,16 +262,36 @@ app.post('/updatePassword/:token' ,(req,res)=>{
         user.password = req.body.password;
         user.resetPasswordToken = undefined;
         user.resetPasswordExpires = undefined;
-
+        bcrypt.genSalt(10, function (err, salt) {
+            if(err)
+            console.log(err)
+        bcrypt.hash(user.password, salt, function (err, hash) {
+        user.password = hash;
         user.save(function(err) {
          if(err){
              console.log(err)
 
          }
          else{
+            const mailOptions = {
+                from: 'techluminav@gmail.com', // sender address
+                to: user.email, // list of receivers
+                subject: 'Subject of your email', // Subject line
+                text :'sucessfully updated password '+
+                'THANKYOU'
+              };
+              transporter.sendMail(mailOptions, function (err, info) {
+                if(err)
+                  console.log(err)
+                else
+                  console.log(info);
+             });
              res.render('login',{data:{view:false}});
          }
           });
+
         });
+    });
       });
+    });
 app.listen(port, () => { console.log(" server running") })
